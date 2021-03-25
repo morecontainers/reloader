@@ -30,7 +30,6 @@ spec:
         - {name: RELOADER_INIT,      value: "1"}
         - {name: RELOADER_CONFIGMAP, value: prometheus}
         - {name: RELOADER_PATH,      value: /config}
-        - {name: RELOADER_ENDPOINT,  value: "http://localhost:8428/-/reload"}
       containers:
       - name: prometheus
         image: victoriametrics/victoria-metrics:v1.56.0
