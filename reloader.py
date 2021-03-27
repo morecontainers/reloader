@@ -94,7 +94,7 @@ if __name__ == "__main__":
     if ENDPOINT:
         print("ENDPOINT:  %s" % ENDPOINT)
     elif PIDFILE:
-        print("PIDFILE:   %s" % ENDPOINT)
+        print("PIDFILE:   %s" % PIDFILE)
         print("SIGNAL:    %i" % SIGNAL)
     stream = watch()
     if not INIT:
