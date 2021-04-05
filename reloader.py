@@ -100,9 +100,9 @@ if __name__ == "__main__":
     if not INIT:
         next(stream)
     for e_type, e_object in stream:
-        if SECRET:
+        if SECRET and PATH:
             update_base64(e_object)
-        else:
+        elif CONFIGMAP and PATH:
             update(e_object)
         if INIT:
             break
