@@ -95,6 +95,7 @@ TODO: Describe the integration paths in some more detail.
 * [Prometheus](https://github.com/prometheus/prometheus/issues/1572)
 * [NGINX](https://www.nginx.com/resources/wiki/start/topics/tutorials/commandline/)
 * [HAProxy](https://www.haproxy.com/blog/haproxy-process-management/)
+* [Docker Registry](https://docs.docker.com/registry/) (via `RELOADER_TOUCHFILE`)
 
 ## Authors
 

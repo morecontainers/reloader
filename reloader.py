@@ -13,6 +13,7 @@ SECRET = os.environ.get("RELOADER_SECRET")
 PATH = os.environ["RELOADER_PATH"]
 ENDPOINT = os.environ.get("RELOADER_ENDPOINT")
 PIDFILE = os.environ.get("RELOADER_PIDFILE")
+TOUCHFILE = os.environ.get("RELOADER_TOUCHFILE")
 SIGNAL = signal.Signals[os.environ.get("RELOADER_SIGNAL", "SIGUSR2")].value
 
 assert bool(CONFIGMAP) ^ bool(SECRET)
@@ -80,6 +81,12 @@ def reload():
             os.kill(pid, SIGNAL)
         except:
             logging.exception("Reload signalling failure:")
+    elif TOUCHFILE:
+        try:
+            with open(TOUCHFILE, "wb"):
+                pass
+        except:
+            logging.exception("Reload touch file failure:")
     else:
         pass
 
@@ -96,6 +103,8 @@ if __name__ == "__main__":
     elif PIDFILE:
         print("PIDFILE:   %s" % PIDFILE)
         print("SIGNAL:    %i" % SIGNAL)
+    elif TOUCHFILE:
+        print("TOUCHFILE: %s" % TOUCHFILE)
     stream = watch()
     if not INIT:
         next(stream)
