@@ -7,7 +7,7 @@ import binascii
 import requests
 
 INIT = os.environ.get("RELOADER_INIT", False)
-NAMESPACE = os.environ.get("RELOADER_NAMESPACE", "default")
+NAMESPACE = os.environ.get("RELOADER_NAMESPACE")
 CONFIGMAP = os.environ.get("RELOADER_CONFIGMAP")
 SECRET = os.environ.get("RELOADER_SECRET")
 PATH = os.environ["RELOADER_PATH"]
@@ -20,9 +20,13 @@ assert bool(CONFIGMAP) ^ bool(SECRET)
 
 
 def watch():
+    global NAMESPACE
     e_type = "configmaps" if CONFIGMAP else "secrets"
     e_name = CONFIGMAP or SECRET
     if os.path.isfile("/run/secrets/kubernetes.io/serviceaccount/token"):
+        if NAMESPACE is None:
+            with open("/var/run/secrets/kubernetes.io/serviceaccount/namespace", "r") as f:
+                NAMESPACE = f.read()
         k8s_host = os.environ["KUBERNETES_SERVICE_HOST"]
         k8s_port = os.environ["KUBERNETES_SERVICE_PORT_HTTPS"]
         url = "https://%s:%s/api/v1/watch/namespaces/%s/%s/%s" % (
@@ -38,6 +42,8 @@ def watch():
         cacert = "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
         r = requests.get(url, stream=True, headers=headers, verify=cacert)
     else:
+        if NAMESPACE is None:
+            NAMESPACE = "default"
         url = "http://localhost:8001/api/v1/watch/namespaces/%s/%s/%s" % (
             NAMESPACE,
             e_type,
