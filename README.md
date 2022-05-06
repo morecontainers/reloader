@@ -4,6 +4,22 @@ TODO:
 
 * Proper logging
 
+## FAQ
+
+*Why not use a configMap volume?*
+
+Because there is a potentially long delay from the fact that the configMap is updated in the API,
+to when it is actually updated on the node.  Reloader wants to make this as quick as possible.
+
+*Why is initContainer required?*
+
+Because there is no config in the emptyDir... It will be, empty. ;-)
+This is a problem for many applications that will simply fail to start if there
+is no config in place at boot. If one could delay the main application until
+one particular container in the pod was up and healthy it would not be required.
+If I see a feature in K8s that would allow this pattern I could consider removing
+the requirement for an initContainer stage.
+
 ## Example deployment
 
 Kubernetes still does not have a formal sidecar pattern,
