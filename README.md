@@ -20,6 +20,26 @@ one particular container in the pod was up and healthy it would not be required.
 If I see a feature in K8s that would allow this pattern I could consider removing
 the requirement for an initContainer stage.
 
+*Why not use Staketer/Reloader?*
+
+You likely should.  For me, Reloader did not provide me with the feature I needed.
+
+https://github.com/stakater/Reloader/issues/217
+
+## Building
+
+Build the app:
+
+```
+$ docker buildx bake --pull
+```
+
+Build and publish:
+
+```
+$ docker buildx bake --pull --push
+```
+
 ## Example deployment
 
 Kubernetes still does not have a formal sidecar pattern,
