@@ -10,6 +10,7 @@ from .config import (
     INIT,
     NAMESPACE,
     PATH,
+    PID,
     PIDFILE,
     SECRET,
     SIGNAL,
@@ -72,10 +73,13 @@ def reload():
             requests.post(ENDPOINT)
         except:
             logging.exception("Reload endpoint failure:")
-    elif PIDFILE:
+    elif PIDFILE or PID:
         try:
-            with open(PIDFILE, "rb") as f:
-                pid = int(f.read())
+            if PIDFILE:
+                with open(PIDFILE, "rb") as f:
+                    pid = int(f.read())
+            else:
+                pid = int(PID)
             os.kill(pid, SIGNAL)
         except:
             logging.exception("Reload signalling failure:")

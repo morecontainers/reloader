@@ -17,6 +17,7 @@ CONFIGMAP = os.environ.get("RELOADER_CONFIGMAP")
 SECRET = os.environ.get("RELOADER_SECRET")
 PATH = os.environ["RELOADER_PATH"]
 ENDPOINT = os.environ.get("RELOADER_ENDPOINT")
+PID = os.environ.get("RELOADER_PIDFILE")
 PIDFILE = os.environ.get("RELOADER_PIDFILE")
 TOUCHFILE = os.environ.get("RELOADER_TOUCHFILE")
 SIGNAL = signal.Signals[os.environ.get("RELOADER_SIGNAL", "SIGUSR2")].value
